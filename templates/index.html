@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Password Generator</title>
+</head>
+<body>
+
+
+<div class="container" id="container">
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Password Generator</a>
+    </nav>
+
+    <br>
+
+    <div class="content" id="content">
+        {% if password %}
+        <p>Your password: {{ password }}</p>
+        {% else %}
+        <p>Choose at least one item</p>
+        {% endif %}
+        <input type="text" id="password" value="{{ password }}">
+        <button onclick="myFunction()" class="btn btn-dark" id="copy-button">Copy the password</button>
+        <form method="post" id="password-generator">
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="letters" name="letters" {% if letters
+                       %}checked{%
+                       endif %}>
+                <label class="form-check-label" for="letters">Letters</label>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="numbers" name="numbers" {% if numbers
+                       %}checked{%
+                       endif %}>
+                <label class="form-check-label" for="numbers">Numbers</label>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="special_symbols" name="special_symbols" {% if
+                       special_symbols %}checked{% endif %}>
+                <label class="form-check-label" for="special_symbols">Special Symbols</label>
+            </div>
+            <div class="form-group form-check">
+                <label for="length">Length of the password:</label>
+                <select class="form-check-label" id="length" name="length">
+                    {% for num in password_length_range %}
+                    <option value="{{ num }}" {% if num== selected_length %}selected{% endif %}>{{ num }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        <button form="password-generator" type="submit" class="btn btn-dark">Generate new password</button>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script>
+    function myFunction() {
+            /* Get the text field */
+            var copyText = document.getElementById("password");
+
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+            /* Copy the text inside the text field */
+            navigator.clipboard.writeText(copyText.value);
+
+        }
+
+</script>
+
+</body>
+</html>
